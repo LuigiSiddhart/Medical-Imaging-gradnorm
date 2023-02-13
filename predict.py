@@ -17,8 +17,8 @@ from torch.optim import Adam
 
 
 LETTER = 'C'
-MODEL_PATH = config.MODEL_PATH_D_DICE_25_best
-#MODEL_PATH = config.MODEL_PATH_A_DICE
+MODEL_PATH = config.MODEL_PATH_C_DICE_best
+#MODEL_PATH = config.MODEL_PATH_C_best
 
 root_dir = config.IMAGE_DATASET_PATH
 csv_file = '/workspace/dataset/folds/fold'+LETTER+'_val.csv'
@@ -32,7 +32,6 @@ if __name__ == '__main__':
     # load our model from disk and flash it to the current device
     print("[INFO] load up model...")
     unet = unet = UNet(3,1).to(config.DEVICE)
-    #unet.load_state_dict(torch.load(MODEL_PATH))
     optimizer = Adam(unet.parameters(), lr=INIT_LR)
 
     checkpoint = torch.load(MODEL_PATH)
@@ -40,7 +39,7 @@ if __name__ == '__main__':
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
     epoch = checkpoint['epoch']
     loss = checkpoint['loss']
-    #unet = torch.load(MODEL_PATH).to(config.DEVICE)
+    
 
     dice_scores = []
     y_label = []
