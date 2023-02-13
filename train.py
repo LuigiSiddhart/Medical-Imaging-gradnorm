@@ -105,9 +105,9 @@ for e in tqdm(range(config.NUM_EPOCHS)):
   avgTrainLoss0 = totalTrainLoss0/trainSteps
   avgTrainLoss1 = totalTrainLoss1/trainSteps
   avgTrainLoss2 = totalTrainLoss2/trainSteps
-    # save the best model till now if we have the least loss in the current epoch
+    # save the best model till now if we have the least loss in the current epoch, applied only on CE loss because is the only one that can give problems
   save_best_model(
-    avgTrainLoss1, e, unet, opt, nn.CrossEntropyLoss(),config.MODEL_PATH_D_DICE_25_best_Ada    #QUA CAMBIARE IL NOME DEL MODELLO 
+    avgTrainLoss1, e, unet, opt, nn.CrossEntropyLoss(),config.MODEL_PATH_D_DICE_25_best_Ada    #change desired name for model
   )
   print("avg train loss 0", avgTrainLoss0)
   print("avg train loss 1", avgTrainLoss1)
