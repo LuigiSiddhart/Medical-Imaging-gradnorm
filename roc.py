@@ -76,7 +76,7 @@ if __name__ == '__main__':
     #calculate the auc
     auc = roc_auc_score(y_intensity_, preds_intensity_)
     
-    
+    #plot them
     plt.plot(nn_fpr, nn_tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % auc)
     plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
     plt.xlim([0.0, 1.0])
