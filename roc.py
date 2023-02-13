@@ -22,6 +22,7 @@ from sklearn.metrics import roc_curve,roc_auc_score
 
 LETTER = 'A'
 MODEL_PATH = config.MODEL_PATH_A_best
+#MODEL_PATH = config.MODEL_PATH_A_best_dice
 
 
 root_dir = config.IMAGE_DATASET_PATH
