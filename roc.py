@@ -61,7 +61,7 @@ if __name__ == '__main__':
             x = x.to(config.DEVICE)
             y0 = y0.to(config.DEVICE)
 
-            # make the predictions, calculate dice score and evaluate the classification for the label and the intensity
+            # make the predictions evaluate the classification for the intensity
             preds = unet1(x)
             y_intensity += [y2.cpu().item(), ]
             preds_intensity += [
@@ -71,7 +71,9 @@ if __name__ == '__main__':
     
     y_intensity_ = np.array(y_intensity)
     preds_intensity_ = np.array(preds_intensity)
+    #calculate the ROC curve
     nn_fpr, nn_tpr, nn_thresholds = roc_curve(y_intensity_ ,preds_intensity_)
+    #calculate the auc
     auc = roc_auc_score(y_intensity_, preds_intensity_)
     
     
