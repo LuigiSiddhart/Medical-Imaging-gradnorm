@@ -24,7 +24,7 @@ LETTERS = ['A','B','C','D','E']
 COLOR = {'A': 'forestgreen','B' : 'darkorange' , 'C' : 'firebrick' , 'D' : 'deeppink', 'E' : 'royalblue'}
 COLOR_AUC = {'A':'springgreen','B' : 'orange' , 'C' : 'indianred' , 'D' : 'pink', 'E' : 'navy'}
 MODEL_PATHS= {'A': config.MODEL_PATH_A_DICE_best, 'B' : config.MODEL_PATH_B_DICE_best , 'C' : config.MODEL_PATH_C_DICE_best , 'D' : config.MODEL_PATH_D_DICE_best, 'E' : config.MODEL_PATH_E_DICE_best}
-
+#MODEL_PATHS= {'A': config.MODEL_PATH_A_best, 'B' : config.MODEL_PATH_B_best , 'C' : config.MODEL_PATH_C_best , 'D' : config.MODEL_PATH_D_best, 'E' : config.MODEL_PATH_E_best}
 
 root_dir = config.IMAGE_DATASET_PATH
 #csv_file = '/workspace/dataset/folds/fold'+LETTER+'_val.csv'
