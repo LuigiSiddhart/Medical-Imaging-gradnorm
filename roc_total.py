@@ -73,17 +73,8 @@ if __name__ == '__main__':
               # make the predictions, evaluate the classification for the intensity
               preds = unet1(x)
   
-              mask = torch.sigmoid(preds[0])
-              predMask = np.where(mask.cpu() > config.THRESHOLD, 1, 0)
-              y0 = y0.type(torch.uint8)
-              predMask = torch.Tensor(predMask).type(torch.uint8).to(config.DEVICE)
-              value = f.dice(predMask, y0).item()
-              dice_scores += [value, ]
-              y_label += [y1.item(), ]
-              #y_label_t = torch.Tensor(y_label)
-              #print(preds[1])
-              preds_label += [preds[1], ]
-              #preds_label_t = torch.Tensor(preds_label)
+              
+              
               y_intensity += [y2.cpu().item(), ]
               preds_intensity += [
                   torch.where(torch.sigmoid(preds[2].squeeze()) > torch.Tensor([config.THRESHOLD]).to(config.DEVICE), 1,
