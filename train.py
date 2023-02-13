@@ -18,14 +18,12 @@ import argparse
 import torch
 import time
 import gc
-#import segmentation_models_pytorch as smp
-#from SeNet import SeNetEncoder
 from gradNorm import GradNorm
 from MultiTaskLoss import MultiTaskLoss
-#from segmentation_models_pytorch.decoders.unet.model import Unet
 from modelgithub import UNet
 from tqdm import tqdm
 from utils import SaveBestModel
+
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-m", "--model", type=str, required=True, help="path to output trained model")
@@ -64,7 +62,6 @@ unet = UNet(3,1).to(config.DEVICE)
     
 # initialize our optimizer and loss function
 opt = Adam(unet.parameters(), lr=INIT_LR)
-#lossFn = nn.CrossEntropyLoss()
 multitaskloss=MultiTaskLoss()
 gradNorm=GradNorm(unet,opt)
 # initialize a dictionary to store training history
@@ -100,9 +97,7 @@ for e in tqdm(range(config.NUM_EPOCHS)):
     totalTrainLoss0=totalTrainLoss0+loss[0].item()
     totalTrainLoss1=totalTrainLoss1+loss[1].item()
     totalTrainLoss2=totalTrainLoss2+loss[2].item()
-    #print("loss 0: ",loss[0].item())
-    #print("loss 1: ",loss[1].item())
-    #print("loss 2: ",loss[2].item())
+    #to see in real time model working...
     print("Batch n.o: ",b)
     b+=1
   # calculate the average training
@@ -160,4 +155,4 @@ plt.ylabel("Loss")
 plt.legend(loc="upper right")
 plt.savefig("/workspace/Classificazione/output/plot_bce_intensity"+LETTER+"bestprova.png")
 # serialize the model to disk
-torch.save(unet, config.MODEL_PATH_D_DICE_25_prova_Ada)
+torch.save(unet, config.MODEL_PATH_D_DICE_25_prova_Ada) #If needed you could save also final model 
