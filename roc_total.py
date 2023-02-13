@@ -70,7 +70,7 @@ if __name__ == '__main__':
               x = x.to(config.DEVICE)
               y0 = y0.to(config.DEVICE)
   
-              # make the predictions, calculate dice score and evaluate the classification for the label and the intensity
+              # make the predictions, evaluate the classification for the intensity
               preds = unet1(x)
   
               mask = torch.sigmoid(preds[0])
@@ -92,10 +92,12 @@ if __name__ == '__main__':
       
       y_intensity_ = np.array(y_intensity)
       preds_intensity_ = np.array(preds_intensity)
+      #calculate the ROC curve
       nn_fpr, nn_tpr, nn_thresholds = roc_curve(y_intensity_ ,preds_intensity_)
+      #calcule the auc score
       auc = roc_auc_score(y_intensity_, preds_intensity_)
     
-    
+      #plot them
       plt.plot(nn_fpr, nn_tpr, color=COLOR[letter], lw=2, label='ROC curve' + letter + '(area = %0.2f)' % auc)
       plt.plot([0, 1], [0, 1], color=COLOR_AUC[letter], lw=2, linestyle='--')
       plt.xlim([0.0, 1.0])
