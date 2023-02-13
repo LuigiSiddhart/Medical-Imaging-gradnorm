@@ -7,3 +7,5 @@ classification, single patch pattern classification and single patch
 segmentation. The used net is U-Net, in an encoder decoder architecture
 in which the encoder is characterized with a backbone
 realized with SE-Net.
+
+The default parameters used is shown in config.py
