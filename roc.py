@@ -20,10 +20,9 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve,roc_auc_score
 
 
-LETTER = 'D'
-MODEL_PATH = config.MODEL_PATH_D_DICE_15_Imma
-#MODEL_PATH2 = config.MODEL_PATH_C_DICE_25_best_Adadelta
-#MODEL_PATH = config.MODEL_PATH_A_DICE
+LETTER = 'A'
+MODEL_PATH = config.MODEL_PATH_A_best
+
 
 root_dir = config.IMAGE_DATASET_PATH
 csv_file = '/workspace/dataset/folds/fold'+LETTER+'_val.csv'
@@ -36,7 +35,7 @@ if __name__ == '__main__':
 
     # load our model from disk and flash it to the current device
     print("[INFO] load up model...")
-    """unet1 = unet = UNet(3,1).to(config.DEVICE)
+    unet1 = unet = UNet(3,1).to(config.DEVICE)
     #unet.load_state_dict(torch.load(MODEL_PATH))
     optimizer1 = Adam(unet.parameters(), lr=INIT_LR)
 
@@ -44,22 +43,10 @@ if __name__ == '__main__':
     unet1.load_state_dict(checkpoint1['model_state_dict'])
     optimizer1.load_state_dict(checkpoint1['optimizer_state_dict'])
     epoch1 = checkpoint1['epoch']
-    loss1 = checkpoint1['loss']"""
-    """unet2 = unet = UNet(3,1).to(config.DEVICE)
-    #unet.load_state_dict(torch.load(MODEL_PATH))
-    optimizer2 = Adam(unet.parameters(), lr=INIT_LR)
+    loss1 = checkpoint1['loss']
+    
 
-    checkpoint2 = torch.load(MODEL_PATH)
-    unet2.load_state_dict(checkpoint['model_state_dict'])
-    optimizer2.load_state_dict(checkpoint['optimizer_state_dict'])
-    epoch2 = checkpoint['epoch']
-    loss2 = checkpoint['loss']"""
-    unet1 = torch.load(MODEL_PATH).to(config.DEVICE)
-
-    dice_scores = []
-    y_label = []
     y_intensity = []
-    preds_label = []
     preds_intensity = []
     i=0
     unet1.eval()
