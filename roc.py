@@ -50,7 +50,6 @@ if __name__ == '__main__':
     preds_intensity = []
     i=0
     unet1.eval()
-    #unet2.eval()
     # turn off gradient tracking
     with torch.no_grad():
         for (x, y0, y1, y2) in testLoader:
@@ -63,35 +62,17 @@ if __name__ == '__main__':
 
             # make the predictions, calculate dice score and evaluate the classification for the label and the intensity
             preds = unet1(x)
-
-            mask = torch.sigmoid(preds[0])
-            predMask = np.where(mask.cpu() > config.THRESHOLD, 1, 0)
-            y0 = y0.type(torch.uint8)
-            predMask = torch.Tensor(predMask).type(torch.uint8).to(config.DEVICE)
-            value = f.dice(predMask, y0).item()
-            dice_scores += [value, ]
-            y_label += [y1.item(), ]
-            #y_label_t = torch.Tensor(y_label)
-            #print(preds[1])
-            preds_label += [preds[1], ]
-            #preds_label_t = torch.Tensor(preds_label)
             y_intensity += [y2.cpu().item(), ]
             preds_intensity += [
                 torch.where(torch.sigmoid(preds[2].squeeze()) > torch.Tensor([config.THRESHOLD]).to(config.DEVICE), 1,
                             0)[0].squeeze().cpu().item(), ]
     
-    #y_label_t = torch.Tensor(y_label).to(config.DEVICE)
-    #preds_label_t = torch.cat(preds_label,0).to(config.DEVICE)
-    #print(y_label_t)
-    #print("Ciao")
-    #print(preds_label_t)
-    #roc_curve = ROC(task='multiclass', num_classes=7)
+    
     y_intensity_ = np.array(y_intensity)
     preds_intensity_ = np.array(preds_intensity)
     nn_fpr, nn_tpr, nn_thresholds = roc_curve(y_intensity_ ,preds_intensity_)
     auc = roc_auc_score(y_intensity_, preds_intensity_)
-    #fpr = np.array(nn_fpr)
-    #tpr = np.array(nn_tpr)
+    
     
     plt.plot(nn_fpr, nn_tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % auc)
     plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
@@ -103,16 +84,4 @@ if __name__ == '__main__':
     plt.legend(loc="lower right")
     plt.savefig("/workspace/Classificazione/output/plot_"+LETTER+"ROCDICE.png")
                             
-    #print('Mask accuracy ', np.array(dice_scores).mean())
-    #d = {'dice_scores': dice_scores}
-    #df_tmp = pd.DataFrame(data=d)
-    #name = 'dice_scores' + '.csv'
-    #df_tmp.to_csv(MODEL_PATH + name, header=True, index=False)
-
-    #print('Label accuracy',
-    #      len(np.array(torch.where((torch.Tensor(preds_label) == torch.Tensor(y_label)))[0])) / len(testLoader))
-    #print(confusion_matrix(preds_label, y_label))
-
-    #print('Intensity accuracy',
-    #      len(np.array(torch.where((torch.Tensor(preds_intensity) == torch.Tensor(y_intensity)))[0])) / len(testLoader))
-    #print(confusion_matrix(preds_intensity, y_intensity))
+    
