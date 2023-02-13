@@ -1,10 +1,7 @@
 import torch
 import torch.nn as nn
 import config as config
-#from dice import DiceLoss
-#from DiceLoss import DiceLoss
 import torch.nn.functional as F
-#from torchgeometry.losses.dice import DiceLoss
 class MultiTaskLoss(nn.Module):
     def __init__(self):
         super(MultiTaskLoss,self).__init__()
@@ -32,7 +29,7 @@ class MultiTaskLoss(nn.Module):
         intensity = intensity.unsqueeze(1)
         intensity = intensity.float()
         loss0=self._dice_loss(preds[0],mask)
-        #loss0 = F.binary_cross_entropy_with_logits(preds[0], mask, reduction='mean')
+        #loss0 = F.binary_cross_entropy_with_logits(preds[0], mask, reduction='mean')  #ONE TIME FOR EACH FOLD DICE AND ONE TIME BCE
         loss1 = crossEntropy(preds[1],label)
         loss2 = binaryCrossEntropy(preds[2],intensity) 
 
